@@ -60,17 +60,20 @@ class PostRepositoryIml implements PostRepository {
   }
 
   @override
-  Future<Either<String, List<PostEntity>>> addPosts(PostEntity post) async {
+  Future<Either<String, PostEntity>> addPosts(PostEntity post) async {
     try {
       final Response response = await postRemoteDataSource.addPosts(post);
-
-      final data = jsonDecode(response.body);
-
-      List<PostEntity> models = data
-          .map<PostModel>((element) => PostModel.fromJson(element))
-          .toList();
-
-      return Right(models);
+      if (response.statusCode == 201) {
+        print("yes");
+        return Right(post);
+      } else {
+        throw ("this is error");
+      }
+      // final data = jsonDecode(response.body);
+      //
+      // List<PostEntity> models = data
+      //     .map<PostModel>((element) => PostModel.fromJson(element))
+      //     .toList();
     } catch (e, stackTrace) {
       // print(e.toString());
       // print(stackTrace.toString());

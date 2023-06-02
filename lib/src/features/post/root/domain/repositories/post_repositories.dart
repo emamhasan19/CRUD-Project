@@ -8,5 +8,5 @@ abstract class PostRepository {
 
   Future<Either<String, PostEntity>> updatePosts(PostEntity post);
 
-  Future<Either<String, List<PostEntity>>> addPosts(PostEntity post);
+  Future<Either<String, PostEntity>> addPosts(PostEntity post);
 }

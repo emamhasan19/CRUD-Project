@@ -4,7 +4,6 @@ import 'package:flutter_details/src/features/login/presentation/bloc/login_bloc.
 import 'package:flutter_details/src/features/post/presentation/add_posts/bloc/add_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/get_all_posts/bloc/post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/get_all_posts/pages/post_page.dart';
-import 'package:flutter_details/src/features/post/root/data/repositories/post_repository_impl.dart';
 import 'package:flutter_details/src/features/post/root/domain/use_cases/create_post_use_case.dart';
 import 'package:flutter_details/src/features/post/root/domain/use_cases/get_all_posts_use_case.dart';
 
@@ -20,10 +19,18 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
-        BlocProvider(create: (_) => PostBloc(getAllPosts: GetAllPosts())),
+        // BlocProvider(
+        //     create: (_) => PostBloc(
+        //         getAllPosts: GetAllPosts(),
+        //         addPostBloc: AddPostBloc(addPostUseCase: AddPostUseCase()))),
+        BlocProvider(
+          create: (_) => PostBloc(
+            getAllPosts: GetAllPosts(),
+          ),
+        ),
         BlocProvider(
           create: (_) => AddPostBloc(
-            addPostUseCase: AddPostUseCase(PostRepositoryIml()),
+            addPostUseCase: AddPostUseCase(),
           ),
         ),
       ],

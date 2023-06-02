@@ -61,28 +61,25 @@ import 'package:flutter_details/src/features/post/root/domain/entities/post_enti
 enum AddPostStatus { initial, success, failure }
 
 class AddPostState extends Equatable {
-  const AddPostState({
-    this.status = AddPostStatus.initial,
-    this.posts = const [],
-    this.errorMessage = '',
-  });
-
   final AddPostStatus status;
-  final List<PostEntity> posts;
+  final PostEntity? post;
   final String errorMessage;
+
+  const AddPostState(
+      {this.status = AddPostStatus.initial, this.post, this.errorMessage = ""});
 
   AddPostState copyWith({
     AddPostStatus? status,
-    List<PostEntity>? posts,
+    PostEntity? post,
     String? errorMessage,
   }) {
     return AddPostState(
       status: status ?? this.status,
-      posts: posts ?? this.posts,
+      post: post ?? this.post,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
   @override
-  List<Object?> get props => [status, posts, errorMessage];
+  List<Object?> get props => [status, post, errorMessage];
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_details/src/features/post/root/data/data_sources/post_remote_data_source.dart';
 import 'package:flutter_details/src/features/post/root/data/models/post_model.dart';
@@ -13,7 +15,7 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
     var client = http.Client();
     var response = await client.get(
       Uri.parse(
-        'https://jsonplaceholder.typicode.com/posts?_limit=5',
+        'https://jsonplaceholder.typicode.com/posts',
       ),
     );
 
@@ -52,15 +54,20 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
 
   @override
   Future<Response> addPosts(PostEntity post) async {
-    print("Post body is: ${post.body}");
-    print("Post title is: ${post.title}");
+    // print("Post body is: ${post.body}");
+    // print("Post title is: ${post.title}");
     var client = http.Client();
 
     final response = await client.post(
-      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
-      body: post.toJson(),
-      headers: {'Content-Type': 'application/json'},
-    );
+        Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+        body: jsonEncode(
+          post.toJson(),
+        )
+        // headers: {'Content-Type': 'application/json'},
+        );
+    print(response.body);
+    print("Post body is: ${post.body}");
+    print("Post title is: ${post.title}");
     return response;
   }
 

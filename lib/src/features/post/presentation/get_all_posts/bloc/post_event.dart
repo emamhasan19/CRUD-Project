@@ -8,3 +8,12 @@ class PostEvent extends Equatable {
 }
 
 class PostFetchedEvent extends PostEvent {}
+
+class PostAddedEvent extends PostEvent {
+  final PostEntity newPost;
+
+  const PostAddedEvent({required this.newPost});
+
+  @override
+  List<Object?> get props => [newPost];
+}
