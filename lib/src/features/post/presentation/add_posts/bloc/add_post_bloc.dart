@@ -45,7 +45,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     AddPostButtonPressed event,
     Emitter<AddPostState> emit,
   ) async {
-    await Future.delayed(Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 1));
     try {
       emit(state.copyWith(status: AddPostStatus.initial));
       await addPostUseCase.execute(event.newPost);

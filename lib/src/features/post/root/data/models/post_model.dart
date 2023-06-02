@@ -15,6 +15,7 @@ class PostModel extends PostEntity {
         body: json["body"],
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         "userId": userId,
         "id": id,

@@ -26,12 +26,11 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
     var client = http.Client();
 
     final response = await client.post(
-        Uri.parse('https://jsonplaceholder.typicode.com/posts?_limit=5'),
-        body: jsonEncode(
-          post.toJson(),
-        )
-        // headers: {'Content-Type': 'application/json'},
-        );
+      Uri.parse('https://jsonplaceholder.typicode.com/posts?_limit=5'),
+      body: jsonEncode(
+        post.toJson(),
+      ),
+    );
     // print(response.body);
     // print("Post body is: ${post.body}");
     // print("Post title is: ${post.title}");

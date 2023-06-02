@@ -11,34 +11,6 @@ import 'package:http/http.dart';
 class PostRepositoryIml implements PostRepository {
   final PostRemoteDataSource postRemoteDataSource = PostRemoteDataSourceImp();
 
-  // @override
-  // Future<Either<String, PostEntity>> addPosts(PostEntity post) async {
-  //   try {
-  //     // final Response response = await postRemoteDataSource.getAllPosts();
-  //     //
-  //     // final data = jsonDecode(response.body);
-  //     //
-  //     // List<PostEntity> models = data
-  //     //     .map<PostModel>((element) => PostModel.fromJson(element))
-  //     //     .toList();
-  //     // models.add(post);
-  //     return right(post);
-  //   } catch (e, stackTrace) {
-  //     // print(e.toString());
-  //     // print(stackTrace.toString());
-  //
-  //     return Left((e.toString()));
-  //   }
-  //   // TODO: implement addPosts
-  //   // throw UnimplementedError();
-  // }
-  //
-  // @override
-  // Future<Either<String, bool>> deletePosts(int postId) {
-  //   // TODO: implement deletePosts
-  //   throw UnimplementedError();
-  // }
-  //
   @override
   Future<Either<String, List<PostEntity>>> getAllPosts() async {
     try {
@@ -52,8 +24,8 @@ class PostRepositoryIml implements PostRepository {
 
       return Right(models);
     } catch (e, stackTrace) {
-      // print(e.toString());
-      // print(stackTrace.toString());
+      print(e.toString());
+      print(stackTrace.toString());
 
       return Left((e.toString()));
     }
@@ -67,7 +39,7 @@ class PostRepositoryIml implements PostRepository {
         // print("yes");
         return Right(post);
       } else {
-        throw ("this is error");
+        throw ("Failed to add post due to ${response.statusCode} error!");
       }
       // final data = jsonDecode(response.body);
       //
@@ -75,8 +47,8 @@ class PostRepositoryIml implements PostRepository {
       //     .map<PostModel>((element) => PostModel.fromJson(element))
       //     .toList();
     } catch (e, stackTrace) {
-      // print(e.toString());
-      // print(stackTrace.toString());
+      print(e.toString());
+      print(stackTrace.toString());
 
       return Left((e.toString()));
     }
@@ -99,22 +71,11 @@ class PostRepositoryIml implements PostRepository {
       } else {
         throw ("this is error");
       }
-      // final data = jsonDecode(response.body);
-      //
-      // List<PostEntity> models = data
-      //     .map<PostModel>((element) => PostModel.fromJson(element))
-      //     .toList();
     } catch (e, stackTrace) {
-      // print(e.toString());
-      // print(stackTrace.toString());
+      print(e.toString());
+      print(stackTrace.toString());
 
       return Left((e.toString()));
     }
   }
-
-  // @override
-  // Future<Either<String, List<PostEntity>>> getAllPosts() {
-  //   // TODO: implement getAllPosts
-  //   throw UnimplementedError();
-  // }
 }
