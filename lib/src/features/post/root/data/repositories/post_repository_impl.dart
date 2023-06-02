@@ -64,7 +64,7 @@ class PostRepositoryIml implements PostRepository {
     try {
       final Response response = await postRemoteDataSource.addPosts(post);
       if (response.statusCode == 201) {
-        print("yes");
+        // print("yes");
         return Right(post);
       } else {
         throw ("this is error");
@@ -83,15 +83,33 @@ class PostRepositoryIml implements PostRepository {
   }
 
   @override
-  Future<Either<String, PostEntity>> updatePosts(PostEntity post) {
-    // TODO: implement updatePosts
+  Future<Either<String, bool>> deletePosts(int postId) {
+    // TODO: implement deletePosts
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<String, bool>> deletePosts(int postId) {
-    // TODO: implement deletePosts
-    throw UnimplementedError();
+  Future<Either<String, PostEntity>> editPosts(PostEntity post) async {
+    try {
+      final Response response =
+          await postRemoteDataSource.updatePosts(post, post.id);
+      if (response.statusCode == 200) {
+        // print("Put ok");
+        return Right(post);
+      } else {
+        throw ("this is error");
+      }
+      // final data = jsonDecode(response.body);
+      //
+      // List<PostEntity> models = data
+      //     .map<PostModel>((element) => PostModel.fromJson(element))
+      //     .toList();
+    } catch (e, stackTrace) {
+      // print(e.toString());
+      // print(stackTrace.toString());
+
+      return Left((e.toString()));
+    }
   }
 
   // @override

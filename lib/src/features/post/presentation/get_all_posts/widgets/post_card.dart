@@ -18,8 +18,14 @@ class PostCard extends StatelessWidget {
         leading: CircleAvatar(
           child: Text(index.toString()),
         ),
-        title: Text(postEntity.title),
-        subtitle: Text(postEntity.title),
+        title: Text(
+          postEntity.title,
+          maxLines: 1,
+        ),
+        subtitle: Text(
+          postEntity.body,
+          maxLines: 2,
+        ),
       ),
     );
   }

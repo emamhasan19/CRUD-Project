@@ -6,7 +6,7 @@ abstract class PostRepository {
 
   Future<Either<String, bool>> deletePosts(int postId);
 
-  Future<Either<String, PostEntity>> updatePosts(PostEntity post);
+  Future<Either<String, PostEntity>> editPosts(PostEntity post);
 
   Future<Either<String, PostEntity>> addPosts(PostEntity post);
 }

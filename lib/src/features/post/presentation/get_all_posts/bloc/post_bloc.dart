@@ -61,11 +61,52 @@ part 'post_state.dart';
 //   }
 // }
 
+// class PostBloc extends Bloc<PostEvent, PostState> {
+//   final GetAllPosts getAllPosts;
+//
+//   PostBloc({required this.getAllPosts}) : super(const PostState()) {
+//     on<PostFetchedEvent>(_onPostFetchedEvent);
+//   }
+//
+//   Future<void> _onPostFetchedEvent(
+//     PostFetchedEvent event,
+//     Emitter<PostState> emit,
+//   ) async {
+//     emit(state.copyWith(status: PostStatus.initial));
+//     try {
+//       final response = await getAllPosts.call();
+//
+//       response.fold(
+//         (l) => emit(
+//           state.copyWith(
+//             status: PostStatus.failure,
+//             errorMessage: l,
+//           ),
+//         ),
+//         (r) => emit(
+//           state.copyWith(
+//             status: PostStatus.success,
+//             posts: r,
+//           ),
+//         ),
+//       );
+//     } catch (e) {
+//       emit(
+//         state.copyWith(
+//           status: PostStatus.failure,
+//           errorMessage: e.toString(),
+//         ),
+//       );
+//     }
+//   }
+// }
+
 class PostBloc extends Bloc<PostEvent, PostState> {
   final GetAllPosts getAllPosts;
 
   PostBloc({required this.getAllPosts}) : super(const PostState()) {
     on<PostFetchedEvent>(_onPostFetchedEvent);
+    on<PostAddedEvent>(_onPostAddedEvent);
   }
 
   Future<void> _onPostFetchedEvent(
@@ -88,6 +129,40 @@ class PostBloc extends Bloc<PostEvent, PostState> {
             status: PostStatus.success,
             posts: r,
           ),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: PostStatus.failure,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onPostAddedEvent(
+    PostAddedEvent event,
+    Emitter<PostState> emit,
+  ) async {
+    try {
+      print("try1");
+      // Perform the logic to add the post here
+      // Example: Call an API to add the post and handle the response
+
+      // Assuming the post is successfully added
+      final newPost = event.newPost;
+      final updatedPosts = List<PostEntity>.from(state.posts);
+      updatedPosts.add(newPost);
+
+      print("updatedPosts are: ${updatedPosts}");
+      print(updatedPosts[updatedPosts.length - 1].body);
+      print("try2");
+
+      emit(
+        state.copyWith(
+          status: PostStatus.success,
+          posts: updatedPosts,
         ),
       );
     } catch (e) {
