@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => AddPostBloc(
             addPostUseCase: AddPostUseCase(),
-            postBlocContext: context,
+            context: context,
           ),
         ),
         BlocProvider(

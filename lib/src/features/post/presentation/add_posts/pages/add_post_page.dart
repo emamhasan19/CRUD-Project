@@ -190,7 +190,7 @@ class _AddPostPageState extends State<AddPostPage> {
         listener: (context, state) {
           if (state.status == AddPostStatus.success) {
             // Fetch posts again after a new post is added
-            context.read<PostBloc>().add(PostFetchedEvent());
+            context.read<PostBloc>().add(PostAddedEvent(newPost: state.post!));
             Navigator.pop(context); // Pop the AddPostPage from the stack
           } else if (state.status == AddPostStatus.failure) {
             ScaffoldMessenger.of(context).showSnackBar(

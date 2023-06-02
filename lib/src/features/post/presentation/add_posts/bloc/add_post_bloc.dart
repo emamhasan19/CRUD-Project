@@ -24,11 +24,8 @@
 //   }
 // }
 
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_details/src/features/post/presentation/get_all_posts/bloc/post_bloc.dart';
 import 'package:flutter_details/src/features/post/root/domain/use_cases/create_post_use_case.dart';
 
 import 'add_post_event.dart';
@@ -36,10 +33,10 @@ import 'add_post_state.dart';
 
 class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
   final AddPostUseCase addPostUseCase;
-  // final BuildContext context;
-  final BuildContext postBlocContext;
+  final BuildContext context;
+  // final BuildContext postBlocContext;
 
-  AddPostBloc({required this.addPostUseCase, required this.postBlocContext})
+  AddPostBloc({required this.addPostUseCase, required this.context})
       : super(const AddPostState()) {
     on<AddPostButtonPressed>(_onPostAddedEvent);
   }
@@ -48,13 +45,11 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     AddPostButtonPressed event,
     Emitter<AddPostState> emit,
   ) async {
+    await Future.delayed(Duration(seconds: 3));
     try {
-      print("hiiiii");
       emit(state.copyWith(status: AddPostStatus.initial));
       await addPostUseCase.execute(event.newPost);
-      emit(state.copyWith(status: AddPostStatus.success)); //new
-      BlocProvider.of<PostBloc>(postBlocContext)
-          .add(PostAddedEvent(newPost: event.newPost));
+      emit(state.copyWith(status: AddPostStatus.success, post: event.newPost));
     } catch (error) {
       print("failed");
       emit(state.copyWith(

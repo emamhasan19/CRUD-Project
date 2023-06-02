@@ -146,18 +146,18 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     Emitter<PostState> emit,
   ) async {
     try {
-      print("try1");
+      // print("try1");
       // Perform the logic to add the post here
       // Example: Call an API to add the post and handle the response
 
       // Assuming the post is successfully added
       final newPost = event.newPost;
       final updatedPosts = List<PostEntity>.from(state.posts);
-      updatedPosts.add(newPost);
+      updatedPosts.insert(0, newPost);
 
-      print("updatedPosts are: ${updatedPosts}");
-      print(updatedPosts[updatedPosts.length - 1].body);
-      print("try2");
+      // print("updatedPosts are: ${updatedPosts}");
+      // print(updatedPosts[updatedPosts.length - 1].body);
+      // print("try2");
 
       emit(
         state.copyWith(

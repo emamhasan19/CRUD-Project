@@ -94,248 +94,6 @@ class PostPage extends StatefulWidget {
   State<PostPage> createState() => _PostPageState();
 }
 
-// class _PostPageState extends State<PostPage> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     context.read<PostBloc>().add(PostFetchedEvent());
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Post'),
-//       ),
-//       body: BlocBuilder<PostBloc, PostState>(
-//         builder: (context, state) {
-//           return BlocListener<AddPostBloc, AddPostState>(
-//             listener: (context, addPostState) {
-//               if (addPostState.status == AddPostStatus.success) {
-//                 // Fetch posts again after a new post is added
-//                 context.read<PostBloc>().add(PostFetchedEvent());
-//               }
-//             },
-//             child: Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: _buildPostsList(state),
-//             ),
-//           );
-//         },
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//               builder: (context) => const AddPostPage(),
-//             ),
-//           );
-//         },
-//         child: const Icon(Icons.add),
-//       ),
-//     );
-//   }
-//
-//   Widget _buildPostsList(PostState state) {
-//     switch (state.status) {
-//       case PostStatus.initial:
-//         return const Center(child: CircularProgressIndicator());
-//
-//       case PostStatus.success:
-//         return state.posts.isNotEmpty
-//             ? ListView.builder(
-//                 itemCount: state.posts.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   PostEntity postEntity = state.posts[index];
-//                   return PostCard(
-//                     index: index + 1,
-//                     postEntity: postEntity,
-//                   );
-//                 },
-//               )
-//             : const Center(
-//                 child: Text('No data found in server'),
-//               );
-//
-//       case PostStatus.failure:
-//         return Center(child: Text(state.errorMessage));
-//
-//       default:
-//         return Container();
-//     }
-//   }
-// }
-
-// class _PostPageState extends State<PostPage> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     context.read<PostBloc>().add(PostFetchedEvent());
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Post'),
-//       ),
-//       body: BlocBuilder<PostBloc, PostState>(
-//         builder: (context, state) {
-//           return BlocListener<AddPostBloc, AddPostState>(
-//             listener: (context, addPostState) {
-//               if (addPostState.status == AddPostStatus.success) {
-//                 // Fetch posts again after a new post is added
-//                 context.read<PostBloc>().add(PostFetchedEvent());
-//               }
-//             },
-//             child: _buildPostsList(state),
-//           );
-//         },
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//               builder: (context) => const AddPostPage(),
-//             ),
-//           );
-//         },
-//         child: const Icon(Icons.add),
-//       ),
-//     );
-//   }
-//
-//   Widget _buildPostsList(PostState state) {
-//     switch (state.status) {
-//       case PostStatus.initial:
-//         return const Center(child: CircularProgressIndicator());
-//
-//       case PostStatus.success:
-//         return state.posts.isNotEmpty
-//             ? ListView.builder(
-//                 itemCount: state.posts.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   PostEntity postEntity = state.posts[index];
-//                   return PostCard(
-//                     index: index + 1,
-//                     postEntity: postEntity,
-//                   );
-//                 },
-//               )
-//             : const Center(
-//                 child: Text('No data found in server'),
-//               );
-//
-//       case PostStatus.failure:
-//         return Center(child: Text(state.errorMessage));
-//
-//       default:
-//         return Container();
-//     }
-//   }
-// }
-
-// class _PostPageState extends State<PostPage> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     context.read<PostBloc>().add(PostFetchedEvent());
-//     context.read<AddPostBloc>().add(AddPostButtonPressed(
-//         PostEntity(userId: 0, id: 1, title: "title", body: "body")));
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Post'),
-//       ),
-//       body: MultiBlocListener(
-//         listeners: [
-//           BlocListener<PostBloc, PostState>(
-//             listener: (context, state) {
-//               if (state.status == PostStatus.success) {
-//                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
-//               } else if (state.status == PostStatus.failure) {
-//                 ScaffoldMessenger.of(context).showSnackBar(
-//                   SnackBar(
-//                     content: Text(state.errorMessage),
-//                   ),
-//                 );
-//               }
-//             },
-//           ),
-//           BlocListener<AddPostBloc, AddPostState>(
-//             listener: (context, state) {
-//               if (state.status == AddPostStatus.success) {
-//                 // Fetch posts again after a new post is added
-//                 context.read<PostBloc>().add(PostFetchedEvent());
-//               } else if (state.status == AddPostStatus.failure) {
-//                 ScaffoldMessenger.of(context).showSnackBar(
-//                   SnackBar(
-//                     content: Text(state.errorMessage),
-//                   ),
-//                 );
-//               }
-//             },
-//           ),
-//         ],
-//         child: Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: BlocBuilder<PostBloc, PostState>(
-//             buildWhen: (previous, current) => previous != current,
-//             builder: (context, state) {
-//               return _buildPostsList(state);
-//             },
-//           ),
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//               builder: (context) => const AddPostPage(),
-//             ),
-//           );
-//         },
-//         child: const Icon(Icons.add),
-//       ),
-//     );
-//   }
-//
-//   Widget _buildPostsList(PostState state) {
-//     switch (state.status) {
-//       case PostStatus.initial:
-//         return const Center(child: CircularProgressIndicator());
-//
-//       case PostStatus.success:
-//         return state.posts.isNotEmpty
-//             ? ListView.builder(
-//                 itemCount: state.posts.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   PostEntity postEntity = state.posts[index];
-//                   return PostCard(
-//                     index: index + 1,
-//                     postEntity: postEntity,
-//                   );
-//                 },
-//               )
-//             : const Center(
-//                 child: Text('No data found in server'),
-//               );
-//
-//       case PostStatus.failure:
-//         return Center(child: Text(state.errorMessage));
-//
-//       default:
-//         return Container();
-//     }
-//   }
-// }
-
 class _PostPageState extends State<PostPage> {
   late PostBloc _postBloc;
   late AddPostBloc _addPostBloc;
@@ -365,10 +123,7 @@ class _PostPageState extends State<PostPage> {
         builder: (context, state) {
           return BlocListener<AddPostBloc, AddPostState>(
             listener: (context, addPostState) {
-              if (addPostState.status == AddPostStatus.success) {
-                _postBloc.add(
-                    PostFetchedEvent()); // Fetch posts again after a new post is added
-              } else if (addPostState.status == AddPostStatus.failure) {
+              if (addPostState.status == AddPostStatus.failure) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(addPostState.errorMessage),
@@ -415,36 +170,6 @@ class _PostPageState extends State<PostPage> {
     );
   }
 
-//   Widget _buildPostsList(PostState state) {
-//     switch (state.status) {
-//       case PostStatus.initial:
-//         return const Center(child: CircularProgressIndicator());
-//
-//       case PostStatus.success:
-//         return state.posts.isNotEmpty
-//             ? ListView.builder(
-//                 itemCount: state.posts.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   PostEntity postEntity = state.posts[index];
-//                   return PostCard(
-//                     index: index + 1,
-//                     postEntity: postEntity,
-//                   );
-//                 },
-//               )
-//             : const Center(
-//                 child: Text('No data found in server'),
-//               );
-//
-//       case PostStatus.failure:
-//         return Center(child: Text(state.errorMessage));
-//
-//       default:
-//         return Container();
-//     }
-//   }
-// }
-
   Widget _buildPostsList(PostState state) {
     switch (state.status) {
       case PostStatus.initial:
@@ -459,14 +184,10 @@ class _PostPageState extends State<PostPage> {
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditPostPage(
-                            post: postEntity,
-                            key: null,
-                          ),
-                        ),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (contex) =>
+                                  EditPostPage(post: postEntity)));
                     },
                     child: PostCard(
                       index: index + 1,
@@ -476,7 +197,7 @@ class _PostPageState extends State<PostPage> {
                 },
               )
             : const Center(
-                child: Text('No data found on server'),
+                child: Text('No data found in server'),
               );
 
       case PostStatus.failure:
@@ -487,3 +208,119 @@ class _PostPageState extends State<PostPage> {
     }
   }
 }
+
+//
+//
+// class PostPage extends StatefulWidget {
+//   const PostPage({Key? key}) : super(key: key);
+//
+//   @override
+//   State<PostPage> createState() => _PostPageState();
+// }
+//
+// class _PostPageState extends State<PostPage> {
+//   late PostBloc _postBloc;
+//   late AddPostBloc _addPostBloc;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _postBloc = context.read<PostBloc>();
+//     _addPostBloc =
+//         AddPostBloc(addPostUseCase: AddPostUseCase(), postBlocContext: context);
+//     _postBloc.add(PostFetchedEvent());
+//   }
+//
+//   @override
+//   void dispose() {
+//     _postBloc.close();
+//     _addPostBloc.close();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider.value(
+//       value: _addPostBloc,
+//       child: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Post'),
+//         ),
+//         body: BlocBuilder<PostBloc, PostState>(
+//           builder: (context, state) {
+//             return BlocListener<AddPostBloc, AddPostState>(
+//               listener: (context, addPostState) {
+//                 if (addPostState.status == AddPostStatus.success) {
+//                   _postBloc.add(PostAddedEvent(newPost: addPostState.post!));
+//                 } else if (addPostState.status == AddPostStatus.failure) {
+//                   ScaffoldMessenger.of(context).showSnackBar(
+//                     SnackBar(
+//                       content: Text(addPostState.errorMessage),
+//                     ),
+//                   );
+//                 }
+//               },
+//               child: Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: _buildPostsList(state),
+//               ),
+//             );
+//           },
+//         ),
+//         floatingActionButton: FloatingActionButton(
+//           onPressed: () {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                 builder: (context) => AddPostPage(),
+//               ),
+//             );
+//           },
+//           child: const Icon(Icons.add),
+//         ),
+//       ),
+//     );
+//   }
+//
+//   Widget _buildPostsList(PostState state) {
+//     switch (state.status) {
+//       case PostStatus.initial:
+//         return const Center(child: CircularProgressIndicator());
+//
+//       case PostStatus.success:
+//         return state.posts.isNotEmpty
+//             ? ListView.builder(
+//                 itemCount: state.posts.length,
+//                 itemBuilder: (BuildContext context, int index) {
+//                   PostEntity postEntity = state.posts[index];
+//                   return GestureDetector(
+//                     onTap: () {
+//                       Navigator.push(
+//                         context,
+//                         MaterialPageRoute(
+//                           builder: (context) => EditPostPage(
+//                             post: postEntity,
+//                             key: null,
+//                           ),
+//                         ),
+//                       );
+//                     },
+//                     child: PostCard(
+//                       index: index + 1,
+//                       postEntity: postEntity,
+//                     ),
+//                   );
+//                 },
+//               )
+//             : const Center(
+//                 child: Text('No data found on server'),
+//               );
+//
+//       case PostStatus.failure:
+//         return Center(child: Text(state.errorMessage));
+//
+//       default:
+//         return Container();
+//     }
+//   }
+// }
