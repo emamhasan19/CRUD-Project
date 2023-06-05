@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_details/src/core/colors.dart';
 import 'package:flutter_details/src/features/post/presentation/add_posts/bloc/add_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/add_posts/bloc/add_post_event.dart';
 import 'package:flutter_details/src/features/post/presentation/add_posts/bloc/add_post_state.dart';
@@ -16,6 +17,7 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
 
@@ -30,15 +32,13 @@ class _AddPostPageState extends State<AddPostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Palette.primary_color,
         title: const Text('Add Post'),
+        centerTitle: true,
       ),
       body: BlocConsumer<AddPostBloc, AddPostState>(
         listener: (context, state) {
-          if (state.status == AddPostStatus.initial) {
-            // Fetch posts again after a new post is added
-            context.read<PostBloc>().add(PostAddedEvent(newPost: state.post!));
-            Navigator.pop(context);
-          } else if (state.status == AddPostStatus.success) {
+          if (state.status == AddPostStatus.success) {
             // Fetch posts again after a new post is added
             context.read<PostBloc>().add(PostAddedEvent(newPost: state.post!));
             Navigator.pop(context); // Pop the AddPostPage from the stack
@@ -53,48 +53,70 @@ class _AddPostPageState extends State<AddPostPage> {
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: _titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Title',
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Title',
+                      labelStyle: TextStyle(color: Palette.primary_color),
+                      // cursorColor: Palette.primary_color,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a title';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                TextField(
-                  controller: _bodyController,
-                  decoration: const InputDecoration(
-                    labelText: 'Body',
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _bodyController,
+                    decoration: const InputDecoration(
+                      labelText: 'Body',
+                      labelStyle: TextStyle(color: Palette.primary_color),
+                      alignLabelWithHint: true,
+                    ),
+                    maxLines: 5,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a body';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    final title = _titleController.text;
-                    final body = _bodyController.text;
-                    if (title.isNotEmpty && body.isNotEmpty) {
-                      PostEntity newPost = PostEntity(
-                        userId: 1,
-                        id: 0, // Set the ID to 0 or null for the new post
-                        title: title,
-                        body: body,
-                      );
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Palette.primary_color),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        final title = _titleController.text;
+                        final body = _bodyController.text;
+                        PostState postState = context.read<PostBloc>().state;
+                        List<PostEntity> postList = postState.posts;
 
-                      BlocProvider.of<AddPostBloc>(context)
-                          .add(AddPostButtonPressed(newPost));
-                      // Navigator.pop(context, newPost);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Please provide required data!!"),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Add Post'),
-                ),
-              ],
+                        PostEntity newPost = PostEntity(
+                          userId: 1,
+                          id: postList.length +
+                              1, // Set the ID to 0 or null for the new post
+                          title: title,
+                          body: body,
+                        );
+
+                        BlocProvider.of<AddPostBloc>(context)
+                            .add(AddPostButtonPressed(newPost));
+                      }
+                    },
+                    child: const Text('Add Post'),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -102,3 +124,89 @@ class _AddPostPageState extends State<AddPostPage> {
     );
   }
 }
+
+// class AddPostPage extends StatefulWidget {
+//   const AddPostPage({Key? key}) : super(key: key);
+//
+//   @override
+//   _AddPostPageState createState() => _AddPostPageState();
+// }
+//
+// class _AddPostPageState extends State<AddPostPage> {
+//   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//   final TextEditingController _titleController = TextEditingController();
+//   final TextEditingController _bodyController = TextEditingController();
+//
+//   @override
+//   void dispose() {
+//     _titleController.dispose();
+//     _bodyController.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Add Post'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Form(
+//           key: _formKey,
+//           child: Column(
+//             children: [
+//               TextFormField(
+//                 controller: _titleController,
+//                 decoration: const InputDecoration(
+//                   border: OutlineInputBorder(),
+//                   labelText: 'Title',
+//                 ),
+//                 validator: (value) {
+//                   if (value!.isEmpty) {
+//                     return 'Please enter a title';
+//                   }
+//                   return null;
+//                 },
+//               ),
+//               const SizedBox(height: 16.0),
+//               TextFormField(
+//                 controller: _bodyController,
+//                 decoration: const InputDecoration(
+//                   border: OutlineInputBorder(),
+//                   labelText: 'Body',
+//                 ),
+//                 validator: (value) {
+//                   if (value!.isEmpty) {
+//                     return 'Please enter a body';
+//                   }
+//                   return null;
+//                 },
+//               ),
+//               const SizedBox(height: 16.0),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   if (_formKey.currentState!.validate()) {
+//                     final title = _titleController.text;
+//                     final body = _bodyController.text;
+//
+//                     PostEntity newPost = PostEntity(
+//                       userId: 1,
+//                       id: 0, // Set the ID to 0 or null for the new post
+//                       title: title,
+//                       body: body,
+//                     );
+//
+//                     BlocProvider.of<AddPostBloc>(context)
+//                         .add(AddPostButtonPressed(newPost));
+//                   }
+//                 },
+//                 child: const Text('Add Post'),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

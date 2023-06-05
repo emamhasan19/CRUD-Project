@@ -55,9 +55,22 @@ class PostRepositoryIml implements PostRepository {
   }
 
   @override
-  Future<Either<String, bool>> deletePosts(int postId) {
-    // TODO: implement deletePosts
-    throw UnimplementedError();
+  Future<Either<String, bool>> deletePosts(int postId) async {
+    try {
+      final Response response = await postRemoteDataSource.deletePost(postId);
+      if (response.statusCode == 200) {
+        // Post successfully deleted
+        print("post deleted ${response.statusCode}");
+        return Right(true);
+      } else {
+        throw ("Failed to delete post due to ${response.statusCode} error!");
+      }
+    } catch (e, stackTrace) {
+      print(e.toString());
+      print(stackTrace.toString());
+
+      return Left(e.toString());
+    }
   }
 
   @override
@@ -65,6 +78,10 @@ class PostRepositoryIml implements PostRepository {
     try {
       final Response response =
           await postRemoteDataSource.updatePosts(post, post.id);
+      // print("in repimp");
+      // print(response.body);
+      // print(post.body);
+      // print(post.title);
       if (response.statusCode == 200) {
         // print("Put ok");
         return Right(post);

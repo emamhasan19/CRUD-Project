@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_details/src/core/colors.dart';
 import 'package:flutter_details/src/features/post/presentation/edit_posts/bloc/edit_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/edit_posts/bloc/edit_post_event.dart';
 import 'package:flutter_details/src/features/post/presentation/edit_posts/bloc/edit_post_state.dart';
+import 'package:flutter_details/src/features/post/presentation/get_all_posts/bloc/post_bloc.dart';
 import 'package:flutter_details/src/features/post/root/domain/entities/post_entity.dart';
 
 class EditPostPage extends StatefulWidget {
@@ -31,16 +33,20 @@ class _EditPostPageState extends State<EditPostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Palette.primary_color,
         title: const Text('Edit Post'),
+        centerTitle: true,
       ),
       body: BlocConsumer<EditPostBloc, EditPostState>(
         listener: (context, state) {
           if (state.status == EditPostStatus.success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Post edited successfully!'),
-              ),
-            );
+            context.read<PostBloc>().add(PostEditedEvent(newPost: state.post!));
+            // Navigator.pop(context);
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   const SnackBar(
+            //     content: Text('Post edited successfully!'),
+            //   ),
+            // );
             Navigator.pop(context);
           } else if (state.status == EditPostStatus.failure) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -59,6 +65,9 @@ class _EditPostPageState extends State<EditPostPage> {
                   controller: _titleController,
                   decoration: const InputDecoration(
                     labelText: 'Title',
+                    labelStyle: TextStyle(
+                      color: Palette.primary_color,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -67,10 +76,17 @@ class _EditPostPageState extends State<EditPostPage> {
                   controller: _bodyController,
                   decoration: const InputDecoration(
                     labelText: 'Body',
+                    labelStyle: TextStyle(
+                      color: Palette.primary_color,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Palette.primary_color),
+                  ),
                   onPressed: () {
                     final title = _titleController.text;
                     final body = _bodyController.text;

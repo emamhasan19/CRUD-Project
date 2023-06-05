@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dartz/dartz.dart';
 import 'package:flutter_details/src/features/post/root/data/data_sources/post_remote_data_source.dart';
 import 'package:flutter_details/src/features/post/root/domain/entities/post_entity.dart';
 import 'package:http/http.dart' as http;
@@ -38,9 +37,16 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
   }
 
   @override
-  Future<Unit> deletePost(int postId) {
-    // TODO: implement deletePost
-    throw UnimplementedError();
+  Future<Response> deletePost(int postId) async {
+    var client = http.Client();
+
+    final response = await client.delete(
+      Uri.parse('https://jsonplaceholder.typicode.com/posts/$postId'),
+    );
+    print(response.body);
+    print("got response");
+
+    return response;
   }
 
   @override
@@ -52,13 +58,17 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
     var client = http.Client();
 
     final url = 'https://jsonplaceholder.typicode.com/posts/$id';
-    // print(url);
+    print(url);
     final response = await client.put(
       Uri.parse(url),
       body:
           jsonEncode(updatedPost.toJson()), // Convert the updated post to JSON
       headers: {'Content-Type': 'application/json'},
     );
+    print(response.body);
+    print("updated title: ${updatedPost.title}");
+    print("updated body: ${updatedPost.body}");
+    print("updated postId: ${updatedPost.id}");
     return response;
   }
 }
