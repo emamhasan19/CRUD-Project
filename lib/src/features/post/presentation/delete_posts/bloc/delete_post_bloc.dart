@@ -11,21 +11,6 @@ class DeletePostBloc extends Bloc<DeletePostEvent, DeletePostState> {
     on<PostDeleteRequested>(_onPostDeletedEvent);
   }
 
-  // void _onPostDeletedEvent(
-  //   PostDeleteRequested event,
-  //   Emitter<DeletePostState> emit,
-  // ) async {
-  //   try {
-  //     emit(state.copyWith(status: DeletePostStatus.initial));
-  //     await deletePostUseCase.execute(event.postId);
-  //     emit(state.copyWith(status: DeletePostStatus.success));
-  //   } catch (error) {
-  //     emit(state.copyWith(
-  //       status: DeletePostStatus.failure,
-  //       errorMessage: 'Failed to add post.',
-  //     ));
-  //   }
-  // }
   void _onPostDeletedEvent(
     PostDeleteRequested event,
     Emitter<DeletePostState> emit,
@@ -38,7 +23,7 @@ class DeletePostBloc extends Bloc<DeletePostEvent, DeletePostState> {
     } catch (error) {
       emit(state.copyWith(
         status: DeletePostStatus.failure,
-        errorMessage: 'Failed to delete post.', // Update the error message here
+        errorMessage: 'Failed to delete post.',
       ));
     }
   }

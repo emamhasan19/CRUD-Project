@@ -16,7 +16,6 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
         'https://jsonplaceholder.typicode.com/posts?_limit=5',
       ),
     );
-
     return response;
   }
 
@@ -30,9 +29,6 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
         post.toJson(),
       ),
     );
-    // print(response.body);
-    // print("Post body is: ${post.body}");
-    // print("Post title is: ${post.title}");
     return response;
   }
 
@@ -43,32 +39,20 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
     final response = await client.delete(
       Uri.parse('https://jsonplaceholder.typicode.com/posts/$postId'),
     );
-    print(response.body);
-    print("got response");
 
     return response;
   }
 
   @override
   Future<Response> updatePosts(PostEntity updatedPost, int id) async {
-    // print("updated title: ${updatedPost.title}");
-    // print("updated body: ${updatedPost.body}");
-    // print("updated postId: ${updatedPost.id}");
-
     var client = http.Client();
 
     final url = 'https://jsonplaceholder.typicode.com/posts/$id';
-    print(url);
     final response = await client.put(
       Uri.parse(url),
-      body:
-          jsonEncode(updatedPost.toJson()), // Convert the updated post to JSON
+      body: jsonEncode(updatedPost.toJson()),
       headers: {'Content-Type': 'application/json'},
     );
-    print(response.body);
-    print("updated title: ${updatedPost.title}");
-    print("updated body: ${updatedPost.body}");
-    print("updated postId: ${updatedPost.id}");
     return response;
   }
 }

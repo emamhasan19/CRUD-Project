@@ -30,11 +30,7 @@ class _DeletePostPageState extends State<DeletePostPage> {
             context
                 .read<PostBloc>()
                 .add(PostDeletedEvent(postId: widget.postId));
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   const SnackBar(
-            //     content: Text('Post deleted successfully!'),
-            //   ),
-            // );
+
             Navigator.pop(context);
           } else if (state.status == DeletePostStatus.failure) {
             ScaffoldMessenger.of(context).showSnackBar(

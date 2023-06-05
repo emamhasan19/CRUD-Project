@@ -7,6 +7,5 @@ class DeletePostUseCase {
 
   Future<Either<String, bool>> execute(int postId) async {
     return await postRepository.deletePosts(postId);
-    // Post added successfully, you can emit a success state or perform any necessary actions
   }
 }

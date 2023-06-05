@@ -5,36 +5,6 @@ import 'package:flutter_details/src/features/post/presentation/delete_posts/bloc
 import 'package:flutter_details/src/features/post/presentation/delete_posts/bloc/delete_post_event.dart';
 import 'package:flutter_details/src/features/post/presentation/edit_posts/pages/edit_post_page.dart';
 import 'package:flutter_details/src/features/post/root/domain/entities/post_entity.dart';
-//
-// class PostCard extends StatelessWidget {
-//   const PostCard({
-//     Key? key,
-//     required this.index,
-//     required this.postEntity,
-//   }) : super(key: key);
-//
-//   final int index;
-//   final PostEntity postEntity;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: ListTile(
-//         leading: CircleAvatar(
-//           child: Text(index.toString()),
-//         ),
-//         title: Text(
-//           postEntity.title,
-//           maxLines: 1,
-//         ),
-//         subtitle: Text(
-//           postEntity.body,
-//           maxLines: 2,
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class PostCard extends StatelessWidget {
   const PostCard({
@@ -127,15 +97,6 @@ class PostCard extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DeletePostPage(
-                  //       postId: postEntity.id,
-                  //     ),
-                  //   ),
-                  // );
-
                   // Show a confirmation dialog here
                   showDialog(
                     context: context,
@@ -164,16 +125,7 @@ class PostCard extends StatelessWidget {
                             // Trigger the DeletePostEvent with the post ID
                             BlocProvider.of<DeletePostBloc>(context)
                                 .add(PostDeleteRequested(postEntity.id));
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         DeletePostPage(postId: postEntity.id),
-                            //   ),
-                            // );
-                            // Dismiss the dialog
 
-                            // Trigger the DeletePostEvent with the post ID
                             // deletePostBloc
                             //     .add(PostDeleteRequested(postEntity.id));
                             // Navigator.of(context).pop();

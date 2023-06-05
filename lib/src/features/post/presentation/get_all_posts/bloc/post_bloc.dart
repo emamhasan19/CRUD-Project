@@ -80,22 +80,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   ) async {
     try {
       final PostEntity newPost = event.newPost;
-      print("coming");
-      // print(newPost.body);
-      // print(newPost.title);
-      // print(newPost.id);
-      final updatedPosts = List<PostEntity>.from(state.posts);
-      // print(updatedPosts[newPost.id-1]);
-      // print(updatedPosts[newPost.id - 1].id);
-      // print(updatedPosts[newPost.id - 1].title);
-      // print(updatedPosts[newPost.id - 1].body);
-      // updatedPosts.insert(0, newPost);
-      // state.posts[newPost.id] = newPost;
-      updatedPosts[newPost.id - 1] = newPost;
 
-      // print(updatedPosts[newPost.id - 1].id);
-      // print(updatedPosts[newPost.id - 1].title);
-      // print(updatedPosts[newPost.id - 1].body);
+      final updatedPosts = List<PostEntity>.from(state.posts);
+
+      updatedPosts[newPost.id - 1] = newPost;
 
       emit(
         state.copyWith(
@@ -118,15 +106,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     Emitter<PostState> emit,
   ) async {
     try {
-      print("deletedtry");
       final postId = event.postId;
       final updatedPosts = List<PostEntity>.from(state.posts);
 
-      // Find the index of the post to be deleted
       final index = updatedPosts.indexWhere((post) => post.id == postId);
 
       if (index != -1) {
-        // Remove the post from the list
         updatedPosts.removeAt(index);
 
         emit(
@@ -136,7 +121,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           ),
         );
       } else {
-        // If the post was not found, emit a failure state
         emit(
           state.copyWith(
             status: PostStatus.failure,

@@ -34,7 +34,6 @@ import 'add_post_state.dart';
 class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
   final AddPostUseCase addPostUseCase;
   final BuildContext context;
-  // final BuildContext postBlocContext;
 
   AddPostBloc({required this.addPostUseCase, required this.context})
       : super(const AddPostState()) {
@@ -51,7 +50,6 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
       await addPostUseCase.execute(event.newPost);
       emit(state.copyWith(status: AddPostStatus.success, post: event.newPost));
     } catch (error) {
-      print("failed");
       emit(state.copyWith(
         status: AddPostStatus.failure,
         errorMessage: 'Failed to add post.',
@@ -59,36 +57,3 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     }
   }
 }
-
-//   Future<void> _onPostAddedEvent(
-//     AddPostButtonPressed event,
-//     Emitter<AddPostState> emit,
-//   ) async {
-//     emit(state.copyWith(status: AddPostStatus.initial));
-//     try {
-//       final response = await addPostUseCase.execute(event.newPost);
-//
-//       response.fold(
-//         (l) => emit(
-//           state.copyWith(
-//             status: AddPostStatus.failure,
-//             errorMessage: l,
-//           ),
-//         ),
-//         (r) => emit(
-//           state.copyWith(
-//             status: AddPostStatus.success,
-//             post: r,
-//           ),
-//         ),
-//       );
-//     } catch (e) {
-//       emit(
-//         state.copyWith(
-//           status: AddPostStatus.failure,
-//           errorMessage: e.toString(),
-//         ),
-//       );
-//     }
-//   }
-// }

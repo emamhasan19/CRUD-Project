@@ -8,6 +8,5 @@ class AddPostUseCase {
 
   Future<Either<String, PostEntity>> execute(PostEntity post) async {
     return await postRepository.addPosts(post);
-    // Post added successfully, you can emit a success state or perform any necessary actions
   }
 }

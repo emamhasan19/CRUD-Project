@@ -23,10 +23,7 @@ class PostRepositoryIml implements PostRepository {
           .toList();
 
       return Right(models);
-    } catch (e, stackTrace) {
-      print(e.toString());
-      print(stackTrace.toString());
-
+    } catch (e) {
       return Left((e.toString()));
     }
   }
@@ -36,20 +33,11 @@ class PostRepositoryIml implements PostRepository {
     try {
       final Response response = await postRemoteDataSource.addPosts(post);
       if (response.statusCode == 201) {
-        // print("yes");
         return Right(post);
       } else {
         throw ("Failed to add post due to ${response.statusCode} error!");
       }
-      // final data = jsonDecode(response.body);
-      //
-      // List<PostEntity> models = data
-      //     .map<PostModel>((element) => PostModel.fromJson(element))
-      //     .toList();
-    } catch (e, stackTrace) {
-      print(e.toString());
-      print(stackTrace.toString());
-
+    } catch (e) {
       return Left((e.toString()));
     }
   }
@@ -59,16 +47,11 @@ class PostRepositoryIml implements PostRepository {
     try {
       final Response response = await postRemoteDataSource.deletePost(postId);
       if (response.statusCode == 200) {
-        // Post successfully deleted
-        print("post deleted ${response.statusCode}");
-        return Right(true);
+        return const Right(true);
       } else {
         throw ("Failed to delete post due to ${response.statusCode} error!");
       }
-    } catch (e, stackTrace) {
-      print(e.toString());
-      print(stackTrace.toString());
-
+    } catch (e) {
       return Left(e.toString());
     }
   }
@@ -78,20 +61,13 @@ class PostRepositoryIml implements PostRepository {
     try {
       final Response response =
           await postRemoteDataSource.updatePosts(post, post.id);
-      // print("in repimp");
-      // print(response.body);
-      // print(post.body);
-      // print(post.title);
+
       if (response.statusCode == 200) {
-        // print("Put ok");
         return Right(post);
       } else {
         throw ("this is error");
       }
-    } catch (e, stackTrace) {
-      print(e.toString());
-      print(stackTrace.toString());
-
+    } catch (e) {
       return Left((e.toString()));
     }
   }

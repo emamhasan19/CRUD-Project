@@ -42,11 +42,6 @@ class _EditPostPageState extends State<EditPostPage> {
           if (state.status == EditPostStatus.success) {
             context.read<PostBloc>().add(PostEditedEvent(newPost: state.post!));
             // Navigator.pop(context);
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   const SnackBar(
-            //     content: Text('Post edited successfully!'),
-            //   ),
-            // );
             Navigator.pop(context);
           } else if (state.status == EditPostStatus.failure) {
             ScaffoldMessenger.of(context).showSnackBar(

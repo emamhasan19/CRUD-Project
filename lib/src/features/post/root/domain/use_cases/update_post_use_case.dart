@@ -8,6 +8,5 @@ class EditPostUseCase {
 
   Future<Either<String, PostEntity>> execute(PostEntity post) async {
     return await postRepository.editPosts(post);
-    // Post Edited successfully, you can emit a success state or perform any necessary actions
   }
 }
