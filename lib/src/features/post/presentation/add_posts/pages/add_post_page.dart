@@ -51,6 +51,13 @@ class _AddPostPageState extends State<AddPostPage> {
           }
         },
         builder: (context, state) {
+          if (state.status == AddPostStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Palette.primary_color,
+              ),
+            );
+          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -91,8 +98,18 @@ class _AddPostPageState extends State<AddPostPage> {
                   const SizedBox(height: 16.0),
                   ElevatedButton(
                     style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all<Size>(
+                          const Size(double.infinity, 48)),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Palette.primary_color),
+                        Palette.primary_color,
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            8,
+                          ), // Set the desired borderRadius
+                        ),
+                      ),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {

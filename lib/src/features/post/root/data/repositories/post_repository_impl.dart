@@ -59,8 +59,7 @@ class PostRepositoryIml implements PostRepository {
   @override
   Future<Either<String, PostEntity>> editPosts(PostEntity post) async {
     try {
-      final Response response =
-          await postRemoteDataSource.updatePosts(post, post.id);
+      final Response response = await postRemoteDataSource.updatePosts(post);
 
       if (response.statusCode == 200) {
         return Right(post);

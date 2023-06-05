@@ -6,7 +6,7 @@ abstract class PostRemoteDataSource {
 
   Future<Response> deletePost(int postId);
 
-  Future<Response> updatePosts(PostEntity post, int id);
+  Future<Response> updatePosts(PostEntity post);
 
   Future<Response> addPosts(PostEntity postEntity);
 }

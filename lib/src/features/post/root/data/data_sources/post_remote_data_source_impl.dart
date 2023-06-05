@@ -44,10 +44,10 @@ class PostRemoteDataSourceImp implements PostRemoteDataSource {
   }
 
   @override
-  Future<Response> updatePosts(PostEntity updatedPost, int id) async {
+  Future<Response> updatePosts(PostEntity updatedPost) async {
     var client = http.Client();
 
-    final url = 'https://jsonplaceholder.typicode.com/posts/$id';
+    final url = 'https://jsonplaceholder.typicode.com/posts/${updatedPost.id}';
     final response = await client.put(
       Uri.parse(url),
       body: jsonEncode(updatedPost.toJson()),

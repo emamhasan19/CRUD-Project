@@ -46,7 +46,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
   ) async {
     // await Future.delayed(const Duration(seconds: 1));
     try {
-      emit(state.copyWith(status: AddPostStatus.initial));
+      emit(state.copyWith(status: AddPostStatus.loading));
       await addPostUseCase.execute(event.newPost);
       emit(state.copyWith(status: AddPostStatus.success, post: event.newPost));
     } catch (error) {
