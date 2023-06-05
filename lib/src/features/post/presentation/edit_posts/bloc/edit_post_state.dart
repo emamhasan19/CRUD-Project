@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_details/src/features/post/root/domain/entities/post_entity.dart';
 
-enum EditPostStatus { initial, success, failure }
+enum EditPostStatus { initial, success, failure, loading }
 
 class EditPostState extends Equatable {
   final EditPostStatus status;

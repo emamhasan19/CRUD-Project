@@ -16,7 +16,7 @@ class EditPostBloc extends Bloc<EditPostEvent, EditPostState> {
     Emitter<EditPostState> emit,
   ) async {
     try {
-      emit(state.copyWith(status: EditPostStatus.initial));
+      emit(state.copyWith(status: EditPostStatus.loading));
       await editPostUseCase.execute(event.updatedPost);
       emit(state.copyWith(
           status: EditPostStatus.success, post: event.updatedPost));

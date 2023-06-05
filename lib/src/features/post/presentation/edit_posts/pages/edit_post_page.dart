@@ -52,6 +52,13 @@ class _EditPostPageState extends State<EditPostPage> {
           }
         },
         builder: (context, state) {
+          if (state.status == EditPostStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Palette.primary_color,
+              ),
+            );
+          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

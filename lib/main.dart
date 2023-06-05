@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_details/src/core/colors.dart';
+import 'package:flutter_details/src/features/Details/bloc/details_page_bloc.dart';
 import 'package:flutter_details/src/features/login/presentation/bloc/login_bloc.dart';
 import 'package:flutter_details/src/features/login/presentation/pages/mylogin_page.dart';
 import 'package:flutter_details/src/features/post/presentation/add_posts/bloc/add_post_bloc.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
           create: (_) => PostBloc(
             getAllPosts: GetAllPosts(),
           ),
+        ),
+        BlocProvider(
+          create: (context) => DetailsPageBloc(),
         ),
         BlocProvider(
           create: (_) => AddPostBloc(
