@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_details/src/core/colors.dart';
 import 'package:flutter_details/src/features/Details/bloc/details_page_bloc.dart';
 import 'package:flutter_details/src/features/login/presentation/bloc/login_bloc.dart';
+import 'package:flutter_details/src/features/login/presentation/pages/login_page.dart';
 import 'package:flutter_details/src/features/post/presentation/add_posts/bloc/add_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/delete_posts/bloc/delete_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/edit_posts/bloc/edit_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/get_all_posts/bloc/post_bloc.dart';
-import 'package:flutter_details/src/features/post/presentation/get_all_posts/pages/post_page.dart';
 import 'package:flutter_details/src/features/post/presentation/search_posts/bloc/search_post_bloc.dart';
 import 'package:flutter_details/src/features/post/root/domain/entities/post_entity.dart';
 import 'package:flutter_details/src/features/post/root/domain/use_cases/create_post_use_case.dart';
@@ -62,8 +62,12 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Palette.primary_color, // Set the cursor color here
+          ),
           // primarySwatch: Palette.primary_color,
           primaryColor: Palette.primary_color,
+
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -81,8 +85,8 @@ class MyApp extends StatelessWidget {
             // fillColor: Palette.primary_color,
           ),
         ),
-        home: const PostPage(),
-        // home: const LoginPage(),
+        // home: const PostPage(),
+        home: const LoginPage(),
       ),
     );
   }

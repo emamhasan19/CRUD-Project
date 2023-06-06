@@ -61,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 32),
               TextFormField(
+                cursorColor: Palette.white_color,
                 controller: _emailController,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
@@ -80,10 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(color: Colors.white),
                   ),
-                  // errorBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(8),
-                  //   borderSide: const BorderSide(color: Colors.amber),
-                  // ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Colors.amber),
+                  ),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -94,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                cursorColor: Palette.white_color,
                 controller: _passwordController,
                 style: const TextStyle(color: Colors.white),
                 obscureText: true,
@@ -114,10 +116,10 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(color: Colors.white),
                   ),
-                  // errorBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(8),
-                  //   borderSide: const BorderSide(color: Colors.amber),
-                  // ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Colors.amber),
+                  ),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {

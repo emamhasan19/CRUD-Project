@@ -1,4 +1,4 @@
-//searchbar in body and without using searchBloc
+// searchbar in body and without using searchBloc
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -152,7 +152,7 @@ class _PostPageState extends State<PostPage> {
     } else if (state.status == PostStatus.success) {
       final List<PostEntity> posts = state.posts;
       // List<PostEntity> filteredPosts = _getFilteredPosts(posts);
-      List<PostEntity> filteredPosts = _searchQuery.isEmpty
+      List<PostEntity> filteredPosts = _searchQuery.trim().isEmpty
           ? posts
           : posts.where((post) {
               final postTitle = post.title.toLowerCase();
@@ -168,42 +168,37 @@ class _PostPageState extends State<PostPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: Stack(
-                    alignment: Alignment.centerRight,
-                    children: [
-                      TextField(
-                        controller: _searchController,
-                        onChanged: (value) {
-                          setState(() {
-                            _searchQuery = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Search posts...',
-                          border: const OutlineInputBorder(),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 16.0),
-                          prefixIcon: const Icon(
-                            Icons.search,
-                            color: Palette.primary_color,
-                          ),
-                          suffixIcon: _searchQuery.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.close,
-                                    color: Palette.primary_color,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _searchQuery = '';
-                                      _searchController.clear();
-                                    });
-                                  },
-                                )
-                              : null,
-                        ),
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        _searchQuery = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Search posts...',
+                      border: const OutlineInputBorder(),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16.0),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Palette.primary_color,
                       ),
-                    ],
+                      suffixIcon: _searchQuery.trim().isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(
+                                Icons.close,
+                                color: Palette.primary_color,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _searchQuery = '';
+                                  _searchController.clear();
+                                });
+                              },
+                            )
+                          : null,
+                    ),
                   ),
                 ),
               ],
@@ -251,7 +246,7 @@ class _PostPageState extends State<PostPage> {
 }
 
 //using searchbar in appbar and searchBloc
-
+//
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_details/src/core/colors.dart';
