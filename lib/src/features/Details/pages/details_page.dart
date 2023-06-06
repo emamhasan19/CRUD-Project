@@ -49,11 +49,11 @@ class _DetailsPageState extends State<DetailsPage> {
           if (state is DetailsLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is DetailsLoaded) {
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                children: [
-                  Card(
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Card(
                     elevation: 4,
                     color: Palette.secondary_color,
                     child: Padding(
@@ -75,7 +75,10 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                   ),
-                  Card(
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Card(
                     elevation: 4,
                     color: Palette.primary_color,
                     child: Padding(
@@ -96,8 +99,8 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           } else {
             return const Text("Something went wrong");

@@ -8,18 +8,10 @@ class DeletePostState extends Equatable {
   final int postId;
 
   const DeletePostState({
-    required this.status,
-    required this.errorMessage,
-    required this.postId,
+    this.status = DeletePostStatus.initial,
+    this.errorMessage = '',
+    this.postId = 0,
   });
-
-  factory DeletePostState.initial() {
-    return const DeletePostState(
-      status: DeletePostStatus.initial,
-      errorMessage: '',
-      postId: 0,
-    );
-  }
 
   DeletePostState copyWith({
     DeletePostStatus? status,

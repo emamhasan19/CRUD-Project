@@ -7,7 +7,7 @@ class DeletePostBloc extends Bloc<DeletePostEvent, DeletePostState> {
   final DeletePostUseCase deletePostUseCase;
 
   DeletePostBloc({required this.deletePostUseCase})
-      : super(DeletePostState.initial()) {
+      : super(const DeletePostState()) {
     on<PostDeleteRequested>(_onPostDeletedEvent);
   }
 
@@ -17,14 +17,28 @@ class DeletePostBloc extends Bloc<DeletePostEvent, DeletePostState> {
   ) async {
     try {
       emit(state.copyWith(status: DeletePostStatus.initial));
-      await deletePostUseCase.execute(event.postId);
-      emit(state.copyWith(
-          status: DeletePostStatus.success, postId: event.postId));
+      final response = await deletePostUseCase.execute(event.postId);
+      response.fold(
+        (l) => emit(
+          state.copyWith(
+            status: DeletePostStatus.failure,
+            errorMessage: l,
+          ),
+        ),
+        (r) => emit(
+          state.copyWith(
+            status: DeletePostStatus.success,
+            postId: event.postId,
+          ),
+        ),
+      );
     } catch (error) {
-      emit(state.copyWith(
-        status: DeletePostStatus.failure,
-        errorMessage: 'Failed to delete post.',
-      ));
+      emit(
+        state.copyWith(
+          status: DeletePostStatus.failure,
+          errorMessage: 'Failed to delete post.',
+        ),
+      );
     }
   }
 }

@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_details/src/core/colors.dart';
 import 'package:flutter_details/src/features/Details/bloc/details_page_bloc.dart';
 import 'package:flutter_details/src/features/login/presentation/bloc/login_bloc.dart';
-import 'package:flutter_details/src/features/login/presentation/pages/mylogin_page.dart';
 import 'package:flutter_details/src/features/post/presentation/add_posts/bloc/add_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/delete_posts/bloc/delete_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/edit_posts/bloc/edit_post_bloc.dart';
 import 'package:flutter_details/src/features/post/presentation/get_all_posts/bloc/post_bloc.dart';
+import 'package:flutter_details/src/features/post/presentation/get_all_posts/pages/post_page.dart';
+import 'package:flutter_details/src/features/post/presentation/search_posts/bloc/search_post_bloc.dart';
+import 'package:flutter_details/src/features/post/root/domain/entities/post_entity.dart';
 import 'package:flutter_details/src/features/post/root/domain/use_cases/create_post_use_case.dart';
 import 'package:flutter_details/src/features/post/root/domain/use_cases/delete_post_use_case.dart';
 import 'package:flutter_details/src/features/post/root/domain/use_cases/get_all_posts_use_case.dart';
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<PostEntity> postList = [];
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -34,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DetailsPageBloc(),
+        ),
+        BlocProvider<SearchBloc>(
+          create: (context) => SearchBloc(postList),
         ),
         BlocProvider(
           create: (_) => AddPostBloc(
@@ -75,8 +81,8 @@ class MyApp extends StatelessWidget {
             // fillColor: Palette.primary_color,
           ),
         ),
-        // home: const PostPage(),
-        home: const MyLoginPage(),
+        home: const PostPage(),
+        // home: const LoginPage(),
       ),
     );
   }

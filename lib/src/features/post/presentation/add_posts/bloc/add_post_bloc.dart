@@ -47,13 +47,28 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     // await Future.delayed(const Duration(seconds: 1));
     try {
       emit(state.copyWith(status: AddPostStatus.loading));
-      await addPostUseCase.execute(event.newPost);
-      emit(state.copyWith(status: AddPostStatus.success, post: event.newPost));
+      final response = await addPostUseCase.execute(event.newPost);
+      response.fold(
+        (l) => emit(
+          state.copyWith(
+            status: AddPostStatus.failure,
+            errorMessage: l,
+          ),
+        ),
+        (r) => emit(
+          state.copyWith(
+            status: AddPostStatus.success,
+            post: event.newPost,
+          ),
+        ),
+      );
     } catch (error) {
-      emit(state.copyWith(
-        status: AddPostStatus.failure,
-        errorMessage: 'Failed to add post.',
-      ));
+      emit(
+        state.copyWith(
+          status: AddPostStatus.failure,
+          errorMessage: 'Failed to add post.',
+        ),
+      );
     }
   }
 }

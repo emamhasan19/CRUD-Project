@@ -17,14 +17,28 @@ class EditPostBloc extends Bloc<EditPostEvent, EditPostState> {
   ) async {
     try {
       emit(state.copyWith(status: EditPostStatus.loading));
-      await editPostUseCase.execute(event.updatedPost);
-      emit(state.copyWith(
-          status: EditPostStatus.success, post: event.updatedPost));
+      final response = await editPostUseCase.execute(event.updatedPost);
+      response.fold(
+        (l) => emit(
+          state.copyWith(
+            status: EditPostStatus.failure,
+            errorMessage: l,
+          ),
+        ),
+        (r) => emit(
+          state.copyWith(
+            status: EditPostStatus.success,
+            post: event.updatedPost,
+          ),
+        ),
+      );
     } catch (error) {
-      emit(state.copyWith(
-        status: EditPostStatus.failure,
-        errorMessage: 'Failed to add post.',
-      ));
+      emit(
+        state.copyWith(
+          status: EditPostStatus.failure,
+          errorMessage: 'Failed to edit post.',
+        ),
+      );
     }
   }
 }

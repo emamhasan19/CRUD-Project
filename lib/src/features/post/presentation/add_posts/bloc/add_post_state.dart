@@ -8,8 +8,11 @@ class AddPostState extends Equatable {
   final PostEntity? post;
   final String errorMessage;
 
-  const AddPostState(
-      {this.status = AddPostStatus.initial, this.post, this.errorMessage = ""});
+  const AddPostState({
+    this.status = AddPostStatus.initial,
+    this.post,
+    this.errorMessage = "",
+  });
 
   AddPostState copyWith({
     AddPostStatus? status,

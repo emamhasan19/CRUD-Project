@@ -5,14 +5,14 @@ import 'package:flutter_details/src/features/login/presentation/bloc/login_bloc.
 import 'package:flutter_details/src/features/post/presentation/get_all_posts/pages/post_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class MyLoginPage extends StatefulWidget {
-  const MyLoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<MyLoginPage> createState() => _MyLoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyLoginPageState extends State<MyLoginPage> {
+class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
